@@ -10,6 +10,7 @@ function App() {
           <div>
             <h3 className="text-uppercase">React Sneakers</h3>
             <p className="opacity-5">Магазин лучших кроссовок</p>
+            <input></input>
           </div>
         </div>
         <ul className="d-flex">
