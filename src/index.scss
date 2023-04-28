@@ -18,9 +18,7 @@ body {
 }
 
 header {
-  // border-bottom: 1px solid #EAEAEA;
-  border-bottom: 1px solid #993838;
-
+  border-bottom: 1px solid #EAEAEA;
 
   img {
     margin-right: 15px;
@@ -115,6 +113,7 @@ header {
 
   .items {
     overflow: auto;
+    margin-bottom: 35px;
   }
 
 
