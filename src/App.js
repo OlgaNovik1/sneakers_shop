@@ -3,6 +3,14 @@ import Card from "./components/Card";
 import Header from "./components/Header";
 
 
+const arr = [
+  { title: 'Мужские Кроссовки Nike Blazer Mid Suede', price: '12999', imageUrl: '/img/sneakers/1.jpg' },
+  { title: 'Мужские Кроссовки Nike Air Max 270', price: '15600', imageUrl: '/img/sneakers/2.jpg' },
+  { title: 'Мужские Кроссовки Nike Blazer Mid Suede', price: '18600', imageUrl: '/img/sneakers/3.jpg' },
+  { title: 'Мужские Кроссовки Under Armour Curry 8', price: '17500', imageUrl: '/img/sneakers/4.jpg' },
+  { title: 'Мужские Кроссовки Nike Kyrie 7', price: '19400', imageUrl: '/img/sneakers/1.jpg' },
+];
+
 
 function App() {
   return (
@@ -18,10 +26,18 @@ function App() {
           </div>
         </div>
         <div className="d-flex flex-wrap">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+
+
+          {
+            arr.map((obj) =>
+              <Card
+                title={obj.title}
+                price={obj.price}
+                imageUrl={obj.imageUrl}
+                onClickFavorite={() => console.log('добавили закладки')}
+                onClickPlus={() => console.log("нажали на плюс")}
+              />
+            )}
 
 
 
