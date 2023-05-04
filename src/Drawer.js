@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 function Drawer({ onClose, onRemove, items = [] }) {
+
     return (
         <div className="overlay">
             <div className="drawer">
@@ -11,7 +12,7 @@ function Drawer({ onClose, onRemove, items = [] }) {
 
                 {items.length > 0
                     ?
-                    <div>
+                    <Fragment>
                         <div className="items flex">
                             {items.map((obj) => (
                                 <div className="cardItem d-flex align-center mb-20">
@@ -42,7 +43,7 @@ function Drawer({ onClose, onRemove, items = [] }) {
                                 Оформить заказ <img src="/img/arrow.svg" alt="arrow"></img>
                             </button>
                         </div>
-                    </div>
+                    </Fragment>
                     :
                     <div className='cartEmpty d-flex align-center justufy-center flex-column flex'>
                         <img className='mb-20' width={120} height={120} src="/img/empty-cart.jpg" alt="empty-cart"></img>
