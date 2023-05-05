@@ -22,11 +22,15 @@ function App() {
 
     axios.get('https://644e444e4e86e9a4d8f4926f.mockapi.io/cart')
       .then((res) => setCartItems(res.data));
+
+    axios.get('https://644e444e4e86e9a4d8f4926f.mockapi.io/favorites')
+      .then((res) => setFavorites(res.data));
+
   }, []);
 
   const onAddToCart = (obj) => {
-    axios.post('https://644e444e4e86e9a4d8f4926f.mockapi.io/cart', obj);
-    setCartItems((prev) => [...prev, obj]);
+    axios.post('https://644e444e4e86e9a4d8f4926f.mockapi.io/cart', obj)
+      .then(res => setCartItems((prev) => [...prev, res.data]))
   };
 
   const onRemoveItem = (id) => {
@@ -34,9 +38,17 @@ function App() {
     setCartItems((prev) => prev.filter((item => item.id !== id)));
   }
 
-  const onAddToFavorite = (obj) => {
-    axios.post('https://644e444e4e86e9a4d8f4926f.mockapi.io/favorites', obj);
-    setFavorites((prev) => [...prev, obj]);
+  const onAddToFavorite = async (obj) => {
+    try {
+      if (favorites.find(fav => fav.id === obj.id)) {
+        axios.delete(`https://644e444e4e86e9a4d8f4926f.mockapi.io/favorites/${obj.id}`);
+      } else {
+        const { data } = await axios.post('https://644e444e4e86e9a4d8f4926f.mockapi.io/favorites', obj);
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Не удалось добавить в фавориты!')
+    }
   };
 
   const onChangeSearchValue = (event) => {
@@ -48,6 +60,8 @@ function App() {
     <div className="wrapper clear">
       {cartOpened &&
         <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />}
+
+
       <Header onClickCart={() => setCartOpened(true)} />
 
       <Routes>
@@ -59,9 +73,13 @@ function App() {
             onChangeSearchValue={onChangeSearchValue}
             onAddToFavorite={onAddToFavorite}
             onAddToCart={onAddToCart}
-          />} exact></Route>
+          />} ></Route>
 
-        <Route path="/favorites" element={<Favorites items={favorites} />} exact></Route>
+        <Route path="/favorites" element=
+          {<Favorites
+            items={favorites}
+            onAddToFavorite={onAddToFavorite}
+          />} ></Route>
 
       </Routes>
 
