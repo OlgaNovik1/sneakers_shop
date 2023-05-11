@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Card from '../Card';
+import AppContext from '../../context';
 
 function Home({
     items,
@@ -7,8 +8,31 @@ function Home({
     setSearchValue,
     onChangeSearchValue,
     onAddToFavorite,
-    onAddToCart }
+    onAddToCart,
+    isLoading
+}
+
 ) {
+
+
+    const renderItems = () => {
+        const filteredItems = items.filter((item) =>
+            item.title.toLowerCase().includes(searchValue.toLowerCase()),
+        );
+
+        return (isLoading ? [...Array(8)] : filteredItems)
+            .map((item, index) =>
+                <Card
+                    key={index}
+                    onFavorite={(obj) => onAddToFavorite(obj)}
+                    onPlus={(obj) => onAddToCart(obj)}
+                    {...item}
+                    loading={isLoading}
+                />
+            )
+    }
+
+
     return (
         <div className="content p-40">
             <div className="d-flex align-center justify-between mb-40">
@@ -19,19 +43,7 @@ function Home({
                     <input onChange={onChangeSearchValue} value={searchValue} placeholder="поиск..."></input>
                 </div>
             </div>
-            <div className="d-flex flex-wrap">
-                {
-                    items
-                        .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                        .map((item, index) =>
-                            <Card
-                                key={index}
-                                onFavorite={(obj) => onAddToFavorite(obj)}
-                                onPlus={(obj) => onAddToCart(obj)}
-                                {...item}
-                            />
-                        )}
-            </div>
+            <div className="d-flex flex-wrap">{renderItems()}</div>
         </div>
     );
 };
