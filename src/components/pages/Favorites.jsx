@@ -22,11 +22,6 @@ function Favorites({ onAddToFavorite }) {
                 )}
             </div>
         </div>
-
-
-
-
-
     );
 };
 
